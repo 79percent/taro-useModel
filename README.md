@@ -7,7 +7,7 @@
 ### 安装
 
 ```
-npm i taro-model-plugin -D
+npm i taro-plugin-model -D
 ```
 
 ### 使用插件（约定）
@@ -17,7 +17,7 @@ npm i taro-model-plugin -D
 ```js
 const config = {
 	plugins: [
-		["taro-model-plugin", { watch: process.env.NODE_ENV === "development" }], // watch: true 监听实时更新;false 不监听
+		["taro-plugin-model", { watch: process.env.NODE_ENV === "development" }], // watch: true 监听实时更新;false 不监听
 	],
 };
 ```
