@@ -1,0 +1,38 @@
+{
+  "name": "taro-plugin-model",
+  "version": "1.0.0",
+  "description": "Taro useModel 状态管理插件",
+  "keywords": [
+    "Taro",
+    "Plugin"
+  ],
+  "author": "79percent",
+  "homepage": "https://github.com/79percent/taro-useModel",
+  "license": "MIT",
+  "main": "index.js",
+  "typings": "types/index.d.ts",
+  "files": [
+    "dist",
+    "index.js",
+    "types"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/79percent/taro-useModel"
+  },
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc -w"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "dependencies": {
+    "@tarojs/service": "^3.6.7",
+    "sequence-async": "^1.0.3",
+    "webpack-chain": "^6.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.13.0"
+  }
+}
