@@ -6,7 +6,7 @@
 
 ### 安装
 
-```
+```ssh
 npm i taro-plugin-model -D
 ```
 
@@ -18,16 +18,19 @@ npm i taro-plugin-model -D
 import { resolve } from "path";
 
 const config = {
-	// ...other config
-	plugins: [
-		[
-			"taro-model-plugin",
-			{
-				watch: process.env.NODE_ENV === "development", // watch: true 监听实时更新;false 不监听
-				dirname: resolve(__dirname, "../"), // 当前项目文件夹路径
-			},
-		],
-	],
+  // ...other config
+  alias: {
+    "@": resolve(__dirname, "../src"), // 配置@为src
+  },
+  plugins: [
+    [
+      "taro-plugin-model",
+      {
+        watch: process.env.NODE_ENV === "development", // watch: true 监听实时更新;false 不监听
+        dirname: resolve(__dirname, "../"), // 当前项目文件夹路径
+      },
+    ],
+  ],
 };
 ```
 
@@ -51,12 +54,12 @@ export defalut App;
 import { useState } from "react";
 
 export default function useHello() {
-	const [name, setName] = useState("hello");
+  const [name, setName] = useState("hello");
 
-	return {
-		name,
-		setName,
-	};
+  return {
+    name,
+    setName,
+  };
 }
 ```
 
@@ -67,8 +70,30 @@ export default function useHello() {
 import { useModel } from "@/.plugin/plugin-model";
 
 export default function Home() {
-	const { name, setName } = useModel("useHello");
+  const { name, setName } = useModel("useHello");
 
-	return <View>{name}</View>;
+  return <View>{name}</View>;
+}
+```
+
+5. 其他的一些配置
+
+```dockerfile
+# .gitignore
+# ...other files
+# 提交时可忽略.plugin文件夹
+/src/.plugin
+```
+
+```json
+// tsconfig.json
+// ...other config
+{
+  "compilerOptions": {
+    // ...other config
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
 }
 ```
