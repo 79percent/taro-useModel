@@ -70,7 +70,7 @@ export default function useHello() {
 import { useModel } from "@/.plugin/plugin-model";
 
 export default function Home() {
-  const { name, setName } = useModel("useHello");
+  const { name, setName } = useModel("hello");
 
   return <View>{name}</View>;
 }
