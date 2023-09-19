@@ -85,9 +85,8 @@ export default function Home() {
 /src/.plugin
 ```
 
-```json
+```js
 // tsconfig.json
-// ...other config
 {
   "compilerOptions": {
     // ...other config
