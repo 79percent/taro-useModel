@@ -18,15 +18,15 @@ npm i taro-plugin-model -D
 import { resolve } from "path";
 
 const config = {
-  // ...other config
+	// ...other config
 	plugins: [
 		[
-      "taro-model-plugin", 
-      { 
-        watch: process.env.NODE_ENV === "development", // watch: true 监听实时更新;false 不监听
-        dirname: resolve(__dirname, '../'), // 当前项目文件夹路径
-      }
-    ], 
+			"taro-model-plugin",
+			{
+				watch: process.env.NODE_ENV === "development", // watch: true 监听实时更新;false 不监听
+				dirname: resolve(__dirname, "../"), // 当前项目文件夹路径
+			},
+		],
 	],
 };
 ```
@@ -48,28 +48,27 @@ export defalut App;
 
 ```jsx
 // src/models/hello.ts
-import { useState } from 'react'
+import { useState } from "react";
 
 export default function useHello() {
-  const [name, setName] = useState('hello');
+	const [name, setName] = useState("hello");
 
-  return {
-    name, setName
-  };
-};
+	return {
+		name,
+		setName,
+	};
+}
 ```
 
-4. 在组件中使用model
+4. 在组件中使用 model
+
 ```jsx
 // src/pages/home/index.tsx
 import { useModel } from "@/.plugin/plugin-model";
 
 export default function Home() {
-  const { name, setName } = useModel('useHello');
+	const { name, setName } = useModel("useHello");
 
-  return (
-    <View>{name}</View>
-  );
+	return <View>{name}</View>;
 }
-
 ```
