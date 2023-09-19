@@ -14,7 +14,8 @@
   "files": [
     "dist",
     "index.js",
-    "types"
+    "types",
+    "template"
   ],
   "repository": {
     "type": "git",

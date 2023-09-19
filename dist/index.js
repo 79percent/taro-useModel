@@ -5,11 +5,11 @@ const path_1 = require("path");
 /**
  * 自动生成.plugin/plugin-model
  */
-exports.default = (ctx, { watch }) => {
+exports.default = (ctx, { watch, dirname }) => {
     ctx.onBuildStart(() => {
-        // console.log('编译开始', watch)
-        const modelsDirPath = (0, path_1.resolve)(__dirname, "../../../src/models");
-        const modelsPath = (0, path_1.resolve)(__dirname, "../../../src/.plugin/plugin-model/models.ts");
+        // console.log("编译开始", watch, dirname);
+        const modelsDirPath = (0, path_1.resolve)(dirname, "./src/models");
+        const modelsPath = (0, path_1.resolve)(dirname, "./src/.plugin/plugin-model/models.ts");
         // 不存在文件夹 则创建
         const createDir = (path) => {
             try {
@@ -22,18 +22,23 @@ exports.default = (ctx, { watch }) => {
         // 复制模板到.plugins下
         const copyTemplate = (templatePath, targetPath) => {
             try {
-                const content = (0, fs_1.readFileSync)(templatePath, 'utf8');
+                const content = (0, fs_1.readFileSync)(templatePath, "utf8");
                 (0, fs_1.writeFileSync)(targetPath, content, { flag: "w" });
             }
             catch (error) {
-                console.log('文件复制失败', error);
+                console.log("文件复制失败", error);
             }
         };
-        createDir((0, path_1.resolve)(__dirname, "../../../src/.plugin"));
-        createDir((0, path_1.resolve)(__dirname, "../../../src/.plugin/plugin-model"));
-        const templateDir = (0, fs_1.readdirSync)((0, path_1.resolve)("./plugins/auto-model/template/plugin-model"));
-        templateDir.forEach((filename) => {
-            copyTemplate((0, path_1.resolve)("./plugins/auto-model/template/plugin-model/" + filename), (0, path_1.resolve)(__dirname, "../../../src/.plugin/plugin-model/" + filename));
+        const pluginDir = (0, path_1.resolve)(dirname, "./src/.plugin");
+        const pluginModelDir = (0, path_1.resolve)(dirname, "./src/.plugin/plugin-model");
+        createDir(pluginDir);
+        createDir(pluginModelDir);
+        const templateDir = (0, path_1.resolve)(__dirname, "../template/plugin-model");
+        const templateDirFiles = (0, fs_1.readdirSync)(templateDir);
+        templateDirFiles.forEach((filename) => {
+            const templatePath = (0, path_1.resolve)(templateDir, filename);
+            const targetPath = (0, path_1.resolve)(dirname, "./src/.plugin/plugin-model/" + filename);
+            copyTemplate(templatePath, targetPath);
         });
         // 文件遍历方法
         const fileDisplay = (filePath) => {
@@ -47,9 +52,13 @@ exports.default = (ctx, { watch }) => {
                 const filedir = (0, path_1.join)(filePath, filename);
                 const fileName = (0, path_1.basename)(filedir, ".ts");
                 if (fileName !== "index") {
-                    const fileAbsolutePath = (0, path_1.join)(modelsDirPath, fileName).replace(/\\/g, '/');
-                    importContent = importContent + `import model_${index} from "${fileAbsolutePath}";\n`;
-                    exportContent = exportContent + `\tmodel_${index}: { namespace: "${fileName}", model: model_${index} },\n`;
+                    const fileAbsolutePath = (0, path_1.join)(modelsDirPath, fileName).replace(/\\/g, "/");
+                    importContent =
+                        importContent +
+                            `import model_${index} from "${fileAbsolutePath}";\n`;
+                    exportContent =
+                        exportContent +
+                            `\tmodel_${index}: { namespace: "${fileName}", model: model_${index} },\n`;
                 }
             });
             exportContent = "\n" + exportContent + "} as const;\n";

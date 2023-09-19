@@ -15,9 +15,18 @@ npm i taro-plugin-model -D
 1. 在`/config/index.js`配置文件中添加插件
 
 ```js
+import { resolve } from "path";
+
 const config = {
+  // ...other config
 	plugins: [
-		["taro-plugin-model", { watch: process.env.NODE_ENV === "development" }], // watch: true 监听实时更新;false 不监听
+		[
+      "taro-model-plugin", 
+      { 
+        watch: process.env.NODE_ENV === "development", // watch: true 监听实时更新;false 不监听
+        dirname: resolve(__dirname, '../'), // 当前项目文件夹路径
+      }
+    ], 
 	],
 };
 ```
